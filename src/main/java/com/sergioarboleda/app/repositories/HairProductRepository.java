@@ -19,7 +19,7 @@ public class HairProductRepository {
         return (List<HairProduct>) repository.findAll();
     }
     
-    public Optional<HairProduct> getByReference(Integer reference){
+    public Optional<HairProduct> getByReference(String reference){
         return repository.findById(reference);
     }
     
@@ -31,8 +31,8 @@ public class HairProductRepository {
         return repository.save(product);
     }
 
-    public void delete(Integer reference){
-        repository.deleteById(reference);
+    public void delete(String reference){
+        repository.deleteAll();
     }
 
 }

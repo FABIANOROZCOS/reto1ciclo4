@@ -7,6 +7,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  *
  * @author FABIAN
  */
-public interface HairProductCrudRepository extends MongoRepository<HairProduct, Integer> {
+public interface HairProductCrudRepository extends MongoRepository<HairProduct, String> {
     
 }

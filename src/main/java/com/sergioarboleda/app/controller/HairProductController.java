@@ -46,8 +46,8 @@ public class HairProductController {
  
     @DeleteMapping("/{reference}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public boolean delete(@PathVariable("reference") Integer reference){
-        return service.delete(reference);
+    public void delete(@PathVariable("reference") String reference){
+            service.delete(reference);
     }
 
 }

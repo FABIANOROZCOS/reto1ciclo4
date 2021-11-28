@@ -19,7 +19,7 @@ public class HairProductService {
         return repository.getAll();
     }
     
-    public Optional<HairProduct> getHairProductByReference(Integer reference){
+    public Optional<HairProduct> getHairProductByReference(String reference){
         return repository.getByReference(reference);
     
     }
@@ -71,7 +71,7 @@ public class HairProductService {
         }
     }
     
-    public boolean delete(Integer reference){
+    public Boolean delete(String reference){
         Boolean result = getHairProductByReference(reference).map(product -> {
             repository.delete(product.getReference());
             return true;
