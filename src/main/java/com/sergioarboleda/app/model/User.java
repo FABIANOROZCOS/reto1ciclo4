@@ -1,28 +1,31 @@
 package com.sergioarboleda.app.model;
 
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import org.springframework.data.mongodb.core.mapping.Document;
 import javax.persistence.*;
-import java.io.Serializable;
 
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "user")
-public class User implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    @Column(name = "user_mail", unique = true, length = 50, nullable = false)
-    private String email;
-    @Column(name = "user_password", length = 50, nullable = false)
-    private String password;
-    @Column(name = "user_name", length = 50, nullable = false)
-    private String name;
+@Document(collection = "usuarios")
+public class User {
 
+    @Id
+    private Integer id;
+    private String identification;
+    private String name;
+    private Date birthDay;
+    private String monthBirthtDay;
+    private String address;
+    private String cellPhone;
+    private String email;
+    private String password;
+    private String zone;
+    private String type;
+    
 
 }

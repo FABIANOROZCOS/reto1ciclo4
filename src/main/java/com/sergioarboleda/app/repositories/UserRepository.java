@@ -50,4 +50,12 @@ public class UserRepository {
         return repository.save(user);
 
     }
+    
+    public void delete(Integer id){
+        repository.deleteById(id);
+    }
+    
+    public List<User> getUserByIdorEmailorName(Integer id, String email, String name){
+        return repository.findByIdOrEmailOrName(id, email, name);
+    }
 }

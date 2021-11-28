@@ -30,9 +30,21 @@ public class UserController {
     public User save(@RequestBody User user){
         return service.save(user);
     }
+    
+    @PutMapping("/update")
+    @ResponseStatus(HttpStatus.CREATED)
+    public User update(@RequestBody User user){
+        return service.update(user);
+    }
+    
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public boolean delete(@PathVariable("id") Integer id){
+        return service.delete(id);
+    }
 
     
-    @GetMapping("/{email}")
+    @GetMapping("/emailexist/{email}")
     public boolean existEmail(@PathVariable("email") String email){
         return service.getUserByEmail(email);
     }
