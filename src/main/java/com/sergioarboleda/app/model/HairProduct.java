@@ -9,21 +9,20 @@ import javax.persistence.*;
 /**
  * @author FABIAN
  */
+@Document(collection = "hairproducts")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "hairproducts")
 public class HairProduct {
-    
     @Id
     private String reference;
     private String brand;
     private String category;
     private String name;
     private String description;
-    private Boolean availability = true;
-    private Double price;
-    private Integer quantity;
+    private boolean availability = true;
+    private double price;
+    private int quantity;
     private String photography;
 
 }

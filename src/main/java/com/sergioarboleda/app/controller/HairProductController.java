@@ -3,6 +3,7 @@ package com.sergioarboleda.app.controller;
 import com.sergioarboleda.app.model.HairProduct;
 import com.sergioarboleda.app.services.HairProductService;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,31 +24,35 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("hairproducts")
 @CrossOrigin(origins = "*")
 public class HairProductController {
-    
     @Autowired
     private HairProductService service;
     
     @GetMapping("/all")
-    public List<HairProduct> getHairProducts() {
+    public List<HairProduct> getAll() {
         return service.getAll();
+    }
+    
+     @GetMapping("/{reference}")
+    public Optional<HairProduct> getProduct(@PathVariable("reference") String reference) {
+        return service.getProduct(reference);
     }
     
     @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)
-    public HairProduct save(@RequestBody HairProduct product){
-        return service.save(product);
+    public HairProduct create(@RequestBody HairProduct gadget){
+        return service.create(gadget);
     }
 
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.CREATED)
-    public HairProduct update(@RequestBody HairProduct product){
-        return service.update(product);
+    public HairProduct update(@RequestBody HairProduct gadget){
+        return service.update(gadget);
     }
  
     @DeleteMapping("/{reference}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable("reference") String reference){
-            service.delete(reference);
+    public boolean delete(@PathVariable("reference") String reference){
+        return service.delete(reference);
     }
 
 }

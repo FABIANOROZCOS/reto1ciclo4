@@ -16,23 +16,23 @@ public class HairProductRepository {
     private HairProductCrudRepository repository;
     
     public List<HairProduct> getAll() {
-        return (List<HairProduct>) repository.findAll();
+        return repository.findAll();
     }
     
-    public Optional<HairProduct> getByReference(String reference){
+    public Optional<HairProduct> getProduct(String reference){
         return repository.findById(reference);
     }
     
-    public HairProduct save(HairProduct product) {
+    public HairProduct create(HairProduct product) {
         return repository.save(product);
     }
     
-    public HairProduct update(HairProduct product) {
-        return repository.save(product);
+    public void update(HairProduct product) {
+        repository.save(product);
     }
 
-    public void delete(String reference){
-        repository.deleteAll();
+    public void delete(HairProduct product){
+        repository.delete(product);
     }
 
 }

@@ -20,42 +20,31 @@ public class UserRepository {
     }
 
 
-    public Optional<User>getUserById(Integer id){
+    public Optional<User>getUser(int id){
         return repository.findById(id);
     }
-
-
-    public Optional<User> getUserByName(String name) {
-        return repository.findByName(name);
+    
+    public User create(User user) {
+        return repository.save(user);
+    }
+    
+    public void update(User user) {
+        repository.save(user);
+    }
+    
+    public void delete(User user) {
+        repository.delete(user);
     }
 
-
-    public Optional<User> getUserByEmail(String email) {
-        return repository.findByEmail(email);
-
+    public boolean emailExists(String email) {
+        Optional<User> usuario = repository.findByEmail(email);
+        
+        return !usuario.isEmpty();
     }
-
-
-    public List<User> getUserByNameOrEmail(String name, String email) {
-        return repository.findByNameOrEmail(name, email);
-    }
-
-
-    public Optional<User> getUserByEmailAndPassword(String email, String password) {
+    
+    public Optional<User> authenticateUser(String email, String password) {
         return repository.findByEmailAndPassword(email, password);
     }
 
 
-    public User save(User user) {
-        return repository.save(user);
-
-    }
-    
-    public void delete(Integer id){
-        repository.deleteById(id);
-    }
-    
-    public List<User> getUserByIdorEmailorName(Integer id, String email, String name){
-        return repository.findByIdOrEmailOrName(id, email, name);
-    }
 }

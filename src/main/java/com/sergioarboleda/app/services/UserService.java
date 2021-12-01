@@ -4,7 +4,6 @@ import com.sergioarboleda.app.model.User;
 import com.sergioarboleda.app.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -19,92 +18,99 @@ public class UserService {
         return repository.getAll();
     }
     
-    public Optional<User> getUserByid(Integer id){
-        return repository.getUserById(id);
+    public Optional<User> getUser(int id){
+        return repository.getUser(id);
     
     }
 
    
-    public User save(User user){
+    public User create(User user){
         if(user.getId()==null){
             return user;
-        }else{
-            if(user.getIdentification()==null || user.getEmail()==null || user.getName()==null || user.getPassword()==null || user.getType()==null){
-                return user;
-            }else{
-                List<User> existsUsers = repository.getUserByIdorEmailorName(user.getId(),user.getEmail(),user.getName());
-                if(existsUsers.isEmpty()){
-                    return repository.save(user);
-                }else {
+        }else {
+            Optional<User> e = repository.getUser(user.getId());
+            if (e.isEmpty()) {
+                if (emailExists(user.getEmail())==false){
+                    return repository.create(user);
+                }else{
                     return user;
                 }
-            }
+            }else{
+                return user;
+            }           
         }
     }
 
     
-    public boolean getUserByEmail(String email){
-        return repository.getUserByEmail(email).isPresent();
-    }
-
-   
-    public User getUserByEmailAndPassword(String email, String password){
-        Optional<User> user = repository.getUserByEmailAndPassword(email, password);
-        if(user.isPresent()){
-            return user.get();
-        }else{
-            return new User();
-        }
-    }
     
     public User update(User user){
-        Optional<User> existsUser = repository.getUserById(user.getId());
-        if(existsUser.isPresent()){
-            if(user.getIdentification()!=null){
-                existsUser.get().setIdentification(user.getIdentification());
-            }
-            if(user.getName()!=null){
-                existsUser.get().setName(user.getName());
-            }
-            if(user.getBirthDay()!=null){
-                existsUser.get().setBirthDay(user.getBirthDay());
-            }
-            if(user.getMonthBirthtDay()!=null){
-                existsUser.get().setMonthBirthtDay(user.getMonthBirthtDay());
-            }
-            if(user.getAddress()!=null){
-                existsUser.get().setAddress(user.getAddress());
-            }
-            if(user.getCellPhone()!=null){
-                existsUser.get().setCellPhone(user.getCellPhone());
-            }
-            if(user.getEmail()!=null){
-                existsUser.get().setEmail(user.getEmail());
-            }
-            if(user.getPassword()!=null){
-                existsUser.get().setPassword(user.getPassword());
-            }
-            if(user.getZone()!=null){
-                existsUser.get().setZone(user.getZone());
-            }
-            if(user.getType()!=null){
-                existsUser.get().setType(user.getType());
-            }
-            return repository.save(existsUser.get());
-            
-        }else{
-            return user;
-        }
         
+        if (user.getId() != null) {
+        
+            Optional<User> userDb = repository.getUser(user.getId());
+            if(!userDb.isEmpty()){
+                if(user.getIdentification()!=null){
+                    userDb.get().setIdentification(user.getIdentification());
+                }
+                if(user.getName()!=null){
+                    userDb.get().setName(user.getName());
+                }
+                if(user.getBirthDay()!=null){
+                    userDb.get().setBirthDay(user.getBirthDay());
+                }
+                if(user.getMonthBirthtDay()!=null){
+                    userDb.get().setMonthBirthtDay(user.getMonthBirthtDay());
+                }
+                if(user.getAddress()!=null){
+                    userDb.get().setAddress(user.getAddress());
+                }
+                if(user.getCellPhone()!=null){
+                    userDb.get().setCellPhone(user.getCellPhone());
+                }
+                if(user.getEmail()!=null){
+                    userDb.get().setEmail(user.getEmail());
+                }
+                if(user.getPassword()!=null){
+                    userDb.get().setPassword(user.getPassword());
+                }
+                if(user.getZone()!=null){
+                    userDb.get().setZone(user.getZone());
+                }
+                if(user.getType()!=null){
+                    userDb.get().setType(user.getType());
+                }
+            
+                repository.update(userDb.get());
+                return userDb.get();
+            } else {
+                return user;
+            }
+        } else {
+            return user;
     }
+}
     
-    public boolean delete(Integer id){
-        Boolean aBoolean = getUserByid(id).map(user -> {
-            repository.delete(user.getId());
+    public boolean delete(int userId){
+        Boolean aBoolean = getUser(userId).map(user -> {
+            repository.delete(user);
             return true;
         }).orElse(false);
         return aBoolean;
     }
+    public boolean emailExists(String email) {
+        return repository.emailExists(email);
+    }
+
+    public User authenticateUser(String email, String password) {
+        Optional<User> usuario = repository.authenticateUser(email, password);
+
+        if (usuario.isEmpty()) {
+            return new User();
+        } else {
+            return usuario.get();
+        }
+    }
+    
     
     
 }

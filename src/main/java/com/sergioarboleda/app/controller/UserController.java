@@ -20,15 +20,15 @@ public class UserController {
 
     
     @GetMapping("/all")
-    public List<User> getUsers() {
+    public List<User> getAll() {
         return service.getAll();
     }
 
     
     @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)
-    public User save(@RequestBody User user){
-        return service.save(user);
+    public User create(@RequestBody User user){
+        return service.create(user);
     }
     
     @PutMapping("/update")
@@ -39,19 +39,19 @@ public class UserController {
     
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public boolean delete(@PathVariable("id") Integer id){
+    public boolean delete(@PathVariable("id") int id){
         return service.delete(id);
     }
 
     
     @GetMapping("/emailexist/{email}")
     public boolean existEmail(@PathVariable("email") String email){
-        return service.getUserByEmail(email);
+        return service.emailExists(email);
     }
 
     
     @GetMapping("/{email}/{password}")
     public User authUser(@PathVariable("email") String email, @PathVariable("password") String password){
-        return service.getUserByEmailAndPassword(email, password);
+        return service.authenticateUser(email, password);
     }
 }
