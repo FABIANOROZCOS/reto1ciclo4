@@ -1,5 +1,6 @@
 package com.sergioarboleda.app.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,14 +16,23 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class HairProduct {
     @Id
-    private String reference;
+    @JsonProperty("reference")
+    private String id;
+    @JsonProperty("brand")
     private String brand;
+    @JsonProperty("category")
     private String category;
+    @JsonProperty("name")
     private String name;
+    @JsonProperty("description")
     private String description;
+    @JsonProperty("availability")
     private boolean availability = true;
+    @JsonProperty("price")
     private double price;
+    @JsonProperty("quantity")
     private int quantity;
+    @JsonProperty("photography")
     private String photography;
 
 }

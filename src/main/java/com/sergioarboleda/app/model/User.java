@@ -1,6 +1,6 @@
 package com.sergioarboleda.app.model;
 
-import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,8 +18,6 @@ public class User {
     private Integer id;
     private String identification;
     private String name;
-    private Date birthDay;
-    private String monthBirthtDay;
     private String address;
     private String cellPhone;
     private String email;

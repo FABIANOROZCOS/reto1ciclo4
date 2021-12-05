@@ -25,7 +25,7 @@ public class HairProductService {
     }
     
     public HairProduct create(HairProduct product){
-        if(product.getReference()==null){
+        if(product.getId()==null){
             return product;
         }else{
             return repository.create(product);
@@ -35,8 +35,8 @@ public class HairProductService {
 
     public HairProduct update(HairProduct product){
         
-        if (product.getReference()!=null) {
-            Optional<HairProduct> productH = repository.getProduct(product.getReference());
+        if (product.getId()!=null) {
+            Optional<HairProduct> productH = repository.getProduct(product.getId());
             if (!productH.isEmpty()) {
                 
                 if (product.getBrand()!=null) {
